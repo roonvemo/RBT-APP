@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>التسجيل عبر الإحالة</title>
+  <style>
+    :root {
+      --primary: #16d1cc;
+      --orange: #ff9800;
+      --white: #ffffff;
+      --light-bg: #f7faff;
+      --blue: #7ab5f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      background-color: var(--white);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--orange);
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      outline: none;
+      background-color: var(--light-bg);
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: var(--orange);
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #777;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <img src="assets/image/logo2.png.png" alt="Logo" class="logo" />
+    <h2>التسجيل عبر رابط الإحالة</h2>
+
+    <input type="text" placeholder="الاسم الكامل" />
+    <input type="password" placeholder="كلمة المرور" />
+
+    <button>تسجيل</button>
+
+    <div class="note">سيتم تحديد رتبتك تلقائيًا حسب الرابط</div>
+  </div>
+
+</body>
+</html>

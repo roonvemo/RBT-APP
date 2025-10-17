@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>غرف الدردشة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #f7faff;
+      --accent: #7ab5f0;
+      --orange: #ff9800;
+      --white: #ffffff;
+      --text: #000000;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--primary);
+      font-family: 'Tajawal', sans-serif;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 80px 20px 30px 20px; /* ترك مساحة للأيقونات في الأعلى */
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: var(--orange);
+      margin-bottom: 30px;
+    }
+
+    .orange-button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      background-color: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(255, 152, 0, 0.4);
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .orange-button:hover {
+      background-color: #e08900;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* ✅ أيقونة الإشعارات في الأعلى على اليسار */
+    .notification-icon {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: var(--orange);
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+      transition: background-color 0.3s ease-in-out;
+      z-index: 1000;
+    }
+
+    .notification-icon:hover {
+      background-color: #e08900;
+    }
+
+    /* ✅ أيقونة الحساب في الأعلى على اليمين */
+    .profile-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--orange);
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+      transition: background-color 0.3s ease-in-out;
+      z-index: 1000;
+    }
+
+    .profile-icon:hover {
+      background-color: #e08900;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔔 أيقونة الإشعارات على اليسار -->
+  <a href="notifications.html" class="notification-icon">🔔</a>
+
+  <!-- ⚙️ أيقونة الحساب على اليمين -->
+  <a href="profile.html" class="profile-icon">⚙️</a>
+
+  <div class="container">
+    <img src="assets/image/logo2.png.png" alt="شعار" class="logo" />
+
+    <h1>غرف الدردشة</h1>
+
+    <a href="Marketer_chat.html" class="orange-button">قاعة المسوقين</a>
+    <a href="Ambassadors_chat.html" class="orange-button">قاعة السفراء</a>
+    <a href="Leaders_chat.html" class="orange-button">قاعة القادة</a>
+
+    <div class="footer-note">اختر غرفتك حسب رتبتك الحالية</div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تعديل الحساب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f7faff;
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-container {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 400px;
+      margin: 40px auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      color: #ff9800;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .btn-save {
+      background-color: #ff9800;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+    }
+
+    .btn-save:hover {
+      background-color: #e08900;
+    }
+
+    .success-msg {
+      color: #4caf50;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #7ab5f0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>تعديل الحساب</h2>
+
+    <input type="text" id="fullname" placeholder="الاسم الكامل" />
+    <input type="email" id="email" placeholder="البريد الإلكتروني" />
+    <input type="text" id="country" placeholder="البلد" />
+    <select id="rank">
+      <option value="مسوق">مسوق</option>
+      <option value="سفير">سفير</option>
+      <option value="قائد">قائد</option>
+    </select>
+
+    <button class="btn-save" onclick="saveProfile()">💾 حفظ التعديلات</button>
+    <div class="success-msg" id="successMsg">✅ تم حفظ التعديلات بنجاح</div>
+
+    <a href="profile.html" class="back-link">⬅️ رجوع إلى الصفحة الشخصية</a>
+  </div>
+
+  <script>
+    // تحميل البيانات الحالية عند فتح الصفحة
+    window.onload = () => {
+      document.getElementById("fullname").value = localStorage.getItem("user_fullname") || "";
+      document.getElementById("email").value = localStorage.getItem("user_email") || "";
+      document.getElementById("country").value = localStorage.getItem("user_country") || "";
+      document.getElementById("rank").value = localStorage.getItem("user_rank") || "مسوق";
+    }
+
+    // حفظ التعديلات
+    function saveProfile() {
+      localStorage.setItem("user_fullname", document.getElementById("fullname").value);
+      localStorage.setItem("user_email", document.getElementById("email").value);
+      localStorage.setItem("user_country", document.getElementById("country").value);
+      localStorage.setItem("user_rank", document.getElementById("rank").value);
+
+      document.getElementById("successMsg").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

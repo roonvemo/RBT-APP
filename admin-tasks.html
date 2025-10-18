@@ -1,344 +1,254 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم الادمن المتقدمة</title>
-<style>
-body.admin-body {
-  font-family: 'Tajawal', sans-serif;
-  margin: 0;
-  background-color: #f0f2f5;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مهام الأدمن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
 
-/* 🔹 الهيدر */
-.admin-header {
-  background-color: #ff9800;
-  color: white;
-  padding: 15px 20px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #f7f7f7, #eaeaea);
+      color: #333;
+      padding: 0;
+    }
 
-/* 🔹 الحاوية العامة */
-.admin-container {
-  display: flex;
-  max-width: 1200px;
-  margin: 20px auto;
-  gap: 20px;
-}
-.admin-sidebar {
-  width: 250px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-.admin-sidebar h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  color: #ff9800;
-}
-.admin-sidebar a {
-  display: block;
-  padding: 10px 0;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid #eee;
-  transition: 0.3s;
-}
-.admin-sidebar a:hover { color: #ff9800; }
+    header {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
-.admin-content {
-  flex: 1;
-  background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.admin-content h2 { color: #ff9800; }
+    header button {
+      border: none;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #000;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-/* 🔹 الأزرار الزجاجية العلوية */
-.top-buttons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-.top-btn {
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 25px;
-  padding: 12px 20px;
-  font-weight: bold;
-  font-size: 16px;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.top-btn:hover {
-  background: rgba(255,255,255,0.9);
-  transform: scale(1.05);
-}
+    header button:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.7);
+    }
 
-/* 🔹 أزرار النوافذ */
-.glass-btn {
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 25px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin: 5px;
-  font-weight: bold;
-  backdrop-filter: blur(6px);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.glass-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.05); }
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-/* 🔹 النافذة الزجاجية */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-.modal.active { visibility: visible; opacity: 1; }
-.modal-content {
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 15px;
-  padding: 20px;
-  width: 320px;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  transform: scale(0.9);
-  animation: showModal 0.3s ease forwards;
-}
-@keyframes showModal { to { transform: scale(1); opacity: 1; } }
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+      color: #000;
+      border-right: 4px solid #999;
+      padding-right: 8px;
+    }
 
-/* ✅ الجداول داخل النوافذ */
-.checkbox-grid {
-  display: grid;
-  gap: 10px;
-  padding: 10px;
-}
-.checkbox-grid.days { grid-template-columns: repeat(4, 1fr); }
-.checkbox-grid.months { grid-template-columns: repeat(3, 1fr); }
-.checkbox-item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 14px;
-}
+    .section {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 15px;
+      margin-top: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
 
-/* ✅ جدول المستخدمين */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-table, th, td { border: 1px solid #ccc; }
-th, td {
-  padding: 10px;
-  text-align: center;
-}
-.storage-icon {
-  float: left;
-  font-size: 24px;
-  color: #ff9800;
-  text-decoration: none;
-  margin-bottom: 10px;
-}
-.preview-box img, .preview-box video, .preview-box iframe {
-  max-width: 100%;
-  max-height: 150px;
-  margin-top: 5px;
-}
-</style>
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.8);
+      border: none;
+      border-radius: 15px;
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,1);
+      transform: translateY(-2px);
+    }
+
+    /* Popup modal الزجاجي */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(255,255,255,0.8);
+      border-radius: 20px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      color: #333;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header button {
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+      h2 { font-size: 16px; }
+    }
+  </style>
 </head>
-<body class="admin-body">
 
-<!-- ✅ العنوان -->
-<div class="admin-header">لوحة تحكم الأدمن</div>
+<body>
 
-<div class="admin-container">
-  <div class="admin-sidebar">
-    <h3>الأقسام</h3>
-    <a href="#post-section">برمجة المنشورات</a>
-    <a href="#quiz-section">برمجة التدريب (Quiz)</a>
-    <a href="#manage-users">المستخدمين</a>
+<header>
+  <button>قاعات الدردشة</button>
+  <button>استراتيجية العمل</button>
+  <button>طلبات الارتقاء</button>
+  <button>رسائل المشتركين</button>
+</header>
+
+<div class="container">
+
+  <h2>برمجة المنشورات</h2>
+  <div class="section">
+    <label>صورة/فيديو/رابط أعلى المنشور</label>
+    <input type="file" />
+    <label>رابط يوتيوب أو موقع (اختياري)</label>
+    <input type="url" placeholder="https://..." />
+    <label>نص المنشور</label>
+    <textarea rows="3"></textarea>
+    <label>اختيار القاعة</label>
+    <select>
+      <option>قاعة المسوقين</option>
+      <option>قاعة السفراء</option>
+      <option>قاعة القادة</option>
+    </select>
+    <button class="btn" onclick="openModal('days')">📅 أيام النشر في الشهر</button>
+    <button class="btn" onclick="openModal('months')">🗓️ أشهر النشر</button>
+    <button class="btn">💾 حفظ المنشور</button>
   </div>
 
-  <div class="admin-content">
-    <!-- ✅ الأزرار العلوية داخل الصفحة -->
-    <div class="top-buttons">
-      <button class="top-btn" onclick="location.href='chatrooms.html'">💬 قاعات الدردشة</button>
-      <button class="top-btn" onclick="location.href='strategy.html'">📋 استراتيجية العمل</button>
-      <button class="top-btn" onclick="location.href='promotion-requests.html'">📈 طلبات الارتقاء</button>
-      <button class="top-btn" onclick="location.href='messages.html'">✉️ رسائل المشتركين</button>
-    </div>
-
-    <a href="storage.html" class="storage-icon">💾 تخزين المنشورات والكويزات</a>
-
-    <!-- ✅ قسم برمجة المنشورات -->
-    <section id="post-section">
-      <h2>برمجة المنشورات</h2>
-      <form id="postForm">
-        <div class="form-group">
-          <label>صورة/فيديو/رابط أعلى المنشور</label>
-          <input type="file" id="postMediaInput" accept="image/*,video/*">
-          <input type="url" id="postLinkInput" placeholder="رابط يوتيوب أو موقع (اختياري)">
-          <div class="preview-box" id="postPreview"></div>
-        </div>
-        <div class="form-group">
-          <label>نص المنشور</label>
-          <textarea rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>اختيار القاعة</label>
-          <select>
-            <option>قاعة المسوقين</option>
-            <option>قاعة السفراء</option>
-            <option>قاعة القادة</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>وقت أول نشر</label>
-          <input type="time" required>
-          <small>التكرار كل 3 ساعات</small>
-        </div>
-
-        <div class="form-group">
-          <button type="button" class="glass-btn" onclick="openModal('daysModal')">📅 أيام النشر في الشهر</button>
-          <button type="button" class="glass-btn" onclick="openModal('monthsModal')">🗓️ أشهر النشر</button>
-        </div>
-
-        <button type="submit" class="btn-orange">حفظ المنشور</button>
-      </form>
-    </section>
-
-    <hr>
-
-    <!-- ✅ برمجة التدريب -->
-    <section id="quiz-section">
-      <h2>برمجة التدريب (Quiz)</h2>
-      <form id="quizForm">
-        <div class="form-group">
-          <label>صورة/فيديو/رابط أعلى الكويز</label>
-          <input type="file" id="quizMediaInput" accept="image/*,video/*">
-          <input type="url" id="quizLinkInput" placeholder="رابط يوتيوب أو موقع (اختياري)">
-          <div class="preview-box" id="quizPreview"></div>
-        </div>
-        <div class="form-group">
-          <label>السؤال</label>
-          <textarea rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>خيارات الإجابة</label>
-          <input type="text" placeholder="خيار 1" required>
-          <input type="text" placeholder="خيار 2" required>
-          <input type="text" placeholder="خيار 3">
-          <input type="text" placeholder="خيار 4">
-        </div>
-        <div class="form-group">
-          <label>الإجابة الصحيحة</label>
-          <select required>
-            <option>خيار 1</option>
-            <option>خيار 2</option>
-            <option>خيار 3</option>
-            <option>خيار 4</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>رتبة المستفيد</label>
-          <select>
-            <option>مسوق</option>
-            <option>سفير</option>
-            <option>قائد</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <button type="button" class="glass-btn" onclick="openModal('quizDaysModal')">📅 أيام تكرار الكويز</button>
-          <button type="button" class="glass-btn" onclick="openModal('quizMonthsModal')">🗓️ أشهر تكرار الكويز</button>
-        </div>
-
-        <button type="submit" class="btn-orange">حفظ التدريب</button>
-      </form>
-    </section>
-
-    <hr>
-
-    <!-- ✅ المستخدمين -->
-    <section id="manage-users">
-      <h2>المستخدمين</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>اسم المستخدم</th>
-            <th>البريد الإلكتروني</th>
-            <th>الرتبة الحالية</th>
-            <th>قاعة الدردشة</th>
-            <th>التحكم</th>
-          </tr>
-        </thead>
-        <tbody id="userTable"></tbody>
-      </table>
-    </section>
+  <h2>برمجة التدريب (Quiz)</h2>
+  <div class="section">
+    <label>صورة/فيديو/رابط أعلى الكويز</label>
+    <input type="file" />
+    <label>السؤال</label>
+    <input type="text" />
+    <label>خيارات الإجابة</label>
+    <input placeholder="خيار 1">
+    <input placeholder="خيار 2">
+    <input placeholder="خيار 3">
+    <input placeholder="خيار 4">
+    <label>الإجابة الصحيحة</label>
+    <select>
+      <option>خيار 1</option><option>خيار 2</option><option>خيار 3</option><option>خيار 4</option>
+    </select>
+    <button class="btn" onclick="openModal('quizDays')">📆 أيام تكرار الكويز</button>
+    <button class="btn" onclick="openModal('quizMonths')">🗓️ أشهر تكرار الكويز</button>
+    <button class="btn">💾 حفظ التدريب</button>
   </div>
 </div>
 
-<!-- ✅ النوافذ -->
-<div class="modal" id="daysModal"><div class="modal-content"><h3>أيام النشر</h3><div id="postDays" class="checkbox-grid days"></div></div></div>
-<div class="modal" id="monthsModal"><div class="modal-content"><h3>أشهر النشر</h3><div id="postMonths" class="checkbox-grid months"></div></div></div>
-<div class="modal" id="quizDaysModal"><div class="modal-content"><h3>أيام تكرار الكويز</h3><div id="quizDays" class="checkbox-grid days"></div></div></div>
-<div class="modal" id="quizMonthsModal"><div class="modal-content"><h3>أشهر تكرار الكويز</h3><div id="quizMonths" class="checkbox-grid months"></div></div></div>
+<!-- 🪟 النوافذ المنبثقة -->
+<div id="days" class="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal('days')">&times;</button>
+    <h3>أيام النشر في الشهر</h3>
+    <div id="days-list"></div>
+  </div>
+</div>
+
+<div id="months" class="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal('months')">&times;</button>
+    <h3>أشهر النشر</h3>
+    <div id="months-list"></div>
+  </div>
+</div>
+
+<div id="quizDays" class="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal('quizDays')">&times;</button>
+    <h3>أيام تكرار الكويز</h3>
+    <div id="quizDays-list"></div>
+  </div>
+</div>
+
+<div id="quizMonths" class="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal('quizMonths')">&times;</button>
+    <h3>أشهر تكرار الكويز</h3>
+    <div id="quizMonths-list"></div>
+  </div>
+</div>
 
 <script>
-function openModal(id){ document.getElementById(id).classList.add('active'); }
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('active'); }));
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-const postDays=document.getElementById('postDays'), quizDays=document.getElementById('quizDays'),
-      postMonths=document.getElementById('postMonths'), quizMonths=document.getElementById('quizMonths');
-for(let i=1;i<=31;i++){
-  let d=document.createElement('label'); d.className='checkbox-item'; d.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; postDays.appendChild(d);
-  if(i<=28){ let q=document.createElement('label'); q.className='checkbox-item'; q.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; quizDays.appendChild(q); }
-}
-const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-months.forEach((m,i)=>{
-  let l=document.createElement('label'); l.className='checkbox-item'; l.innerHTML=`<input type="checkbox" value="${i+1}"> ${m}`;
-  postMonths.appendChild(l.cloneNode(true)); quizMonths.appendChild(l.cloneNode(true));
-});
+  const days = Array.from({length:31}, (_,i)=>i+1)
+  const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]
 
-const users=[{name:"Ali",email:"ali@example.com",rank:"مسوق",room:"قاعة المسوقين"},
-{name:"Sara",email:"sara@example.com",rank:"سفير",room:"قاعة السفراء"},
-{name:"Khalid",email:"khalid@example.com",rank:"قائد",room:"قاعة القادة"}];
-const userTable=document.getElementById('userTable');
-function renderUsers(){
-  userTable.innerHTML='';
-  users.forEach((u,i)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${u.name}</td><td>${u.email}</td><td>${u.rank}</td><td>${u.room}</td>
-    <td><button onclick="deleteUser(${i})">حذف</button> <button onclick="promoteUser(${i})">ترقية</button> <button onclick="demoteUser(${i})">إعادة</button></td>`;
-    userTable.appendChild(tr);
-  });
-}
-function deleteUser(i){ users.splice(i,1); renderUsers(); }
-function promoteUser(i){ const order=['مسوق','سفير','قائد']; let idx=order.indexOf(users[i].rank); if(idx<2) users[i].rank=order[idx+1]; renderUsers(); }
-function demoteUser(i){ const order=['مسوق','سفير','قائد']; let idx=order.indexOf(users[i].rank); if(idx>0) users[i].rank=order[idx-1]; renderUsers(); }
-renderUsers();
+  function renderList(containerId, items){
+    document.getElementById(containerId).innerHTML = items.map(i=>`
+      <label><input type="checkbox"> ${i}</label>
+    `).join("<br>");
+  }
+
+  renderList('days-list', days)
+  renderList('months-list', months)
+  renderList('quizDays-list', days)
+  renderList('quizMonths-list', months)
 </script>
 
 </body>

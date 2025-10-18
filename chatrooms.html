@@ -27,7 +27,7 @@
     .container {
       max-width: 400px;
       margin: auto;
-      padding: 80px 20px 30px 20px; /* ترك مساحة للأيقونات في الأعلى */
+      padding: 80px 20px 30px 20px; /* مساحة للأيقونات في الأعلى */
     }
 
     .logo {
@@ -67,7 +67,7 @@
       color: #666;
     }
 
-    /* ✅ أيقونة الإشعارات في الأعلى على اليسار */
+    /* أيقونة الإشعارات */
     .notification-icon {
       position: absolute;
       top: 15px;
@@ -91,7 +91,7 @@
       background-color: #e08900;
     }
 
-    /* ✅ أيقونة الحساب في الأعلى على اليمين */
+    /* أيقونة الحساب */
     .profile-icon {
       position: absolute;
       top: 15px;
@@ -114,24 +114,34 @@
     .profile-icon:hover {
       background-color: #e08900;
     }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 70px 15px;
+      }
+      .orange-button {
+        font-size: 15px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🔔 أيقونة الإشعارات على اليسار -->
-  <a href="notifications.html" class="notification-icon">🔔</a>
+  <!-- 🔔 أيقونة الإشعارات -->
+  <a href="/RBT-APP/notifications.html" class="notification-icon">🔔</a>
 
-  <!-- ⚙️ أيقونة الحساب على اليمين -->
-  <a href="profile.html" class="profile-icon">⚙️</a>
+  <!-- ⚙️ أيقونة الحساب -->
+  <a href="/RBT-APP/profile.html" class="profile-icon">⚙️</a>
 
   <div class="container">
-    <img src="assets/image/logo2.png.png" alt="شعار" class="logo" />
+    <img src="/RBT-APP/assets/image/logo2.png" alt="شعار" class="logo" />
 
     <h1>غرف الدردشة</h1>
 
-    <a href="Marketer_chat.html" class="orange-button">قاعة المسوقين</a>
-    <a href="Ambassadors_chat.html" class="orange-button">قاعة السفراء</a>
-    <a href="Leaders_chat.html" class="orange-button">قاعة القادة</a>
+    <!-- ✅ روابط القاعات (بحروف صغيرة لتفادي خطأ 404) -->
+    <a href="/RBT-APP/marketer_chat.html" class="orange-button">قاعة المسوقين</a>
+    <a href="/RBT-APP/ambassadors_chat.html" class="orange-button">قاعة السفراء</a>
+    <a href="/RBT-APP/leaders_chat.html" class="orange-button">قاعة القادة</a>
 
     <div class="footer-note">اختر غرفتك حسب رتبتك الحالية</div>
   </div>

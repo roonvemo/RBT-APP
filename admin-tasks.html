@@ -10,40 +10,18 @@ body.admin-body {
   margin: 0;
   background-color: #f0f2f5;
 }
+
+/* 🔹 الهيدر */
 .admin-header {
   background-color: #ff9800;
   color: white;
   padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  flex-wrap: wrap;
-}
-.admin-header .left-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.admin-header .left-buttons a {
-  background-color: white;
-  color: #ff9800;
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.admin-header .left-buttons a:hover {
-  background-color: #ffe0b2;
-}
-.admin-header .right-icons a {
-  color: white;
-  text-decoration: none;
+  text-align: center;
   font-size: 22px;
-  margin-left: 10px;
+  font-weight: bold;
 }
 
+/* 🔹 الحاوية العامة */
 .admin-container {
   display: flex;
   max-width: 1200px;
@@ -70,9 +48,8 @@ body.admin-body {
   border-bottom: 1px solid #eee;
   transition: 0.3s;
 }
-.admin-sidebar a:hover {
-  color: #ff9800;
-}
+.admin-sidebar a:hover { color: #ff9800; }
+
 .admin-content {
   flex: 1;
   background-color: white;
@@ -82,67 +59,97 @@ body.admin-body {
   max-height: 90vh;
   overflow-y: auto;
 }
-.admin-content h2 {
-  color: #ff9800;
+.admin-content h2 { color: #ff9800; }
+
+/* 🔹 الأزرار الزجاجية العلوية */
+.top-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
 }
-.form-group { margin-bottom: 15px; }
-.form-group label {
-  display: block;
+.top-btn {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 25px;
+  padding: 12px 20px;
   font-weight: bold;
-  margin-bottom: 5px;
-}
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-.btn-orange {
-  background-color: #ff9800;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 30px;
-  border: none;
-  font-weight: bold;
+  font-size: 16px;
+  backdrop-filter: blur(6px);
   cursor: pointer;
-  margin-top: 10px;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.btn-orange:hover {
-  background-color: #e08900;
+.top-btn:hover {
+  background: rgba(255,255,255,0.9);
+  transform: scale(1.05);
 }
+
+/* 🔹 أزرار النوافذ */
+.glass-btn {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.glass-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.05); }
+
+/* 🔹 النافذة الزجاجية */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+.modal.active { visibility: visible; opacity: 1; }
+.modal-content {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 20px;
+  width: 320px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transform: scale(0.9);
+  animation: showModal 0.3s ease forwards;
+}
+@keyframes showModal { to { transform: scale(1); opacity: 1; } }
+
+/* ✅ الجداول داخل النوافذ */
 .checkbox-grid {
   display: grid;
   gap: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #fafafa;
 }
-.checkbox-grid.days {
-  grid-template-columns: repeat(4, 1fr);
-}
-.checkbox-grid.months {
-  grid-template-columns: repeat(3, 1fr);
-}
+.checkbox-grid.days { grid-template-columns: repeat(4, 1fr); }
+.checkbox-grid.months { grid-template-columns: repeat(3, 1fr); }
 .checkbox-item {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   font-size: 14px;
-  padding: 5px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* ✅ جدول المستخدمين */
 table {
   width: 100%;
   border-collapse: collapse;
 }
-table, th, td {
-  border: 1px solid #ccc;
-}
+table, th, td { border: 1px solid #ccc; }
 th, td {
   padding: 10px;
   text-align: center;
@@ -163,19 +170,8 @@ th, td {
 </head>
 <body class="admin-body">
 
-<!-- ✅ الهيدر المعدّل -->
-<div class="admin-header">
-  <div class="left-buttons">
-    <a href="chatrooms.html"> قاعات الدردشة</a>
-    <a href="strategy.html"> استراتيجية العمل</a>
-    <a href="promotion-requests.html"> طلبات الارتقاء</a>
-    <a href="messages.html"> رسائل المشتركين</a>
-  </div>
-  <div class="right-icons">
-    <a href="notifications.html">🔔</a>
-    <a href="profile.html">⚙️</a>
-  </div>
-</div>
+<!-- ✅ العنوان -->
+<div class="admin-header">لوحة تحكم الأدمن</div>
 
 <div class="admin-container">
   <div class="admin-sidebar">
@@ -186,9 +182,17 @@ th, td {
   </div>
 
   <div class="admin-content">
+    <!-- ✅ الأزرار العلوية داخل الصفحة -->
+    <div class="top-buttons">
+      <button class="top-btn" onclick="location.href='chatrooms.html'">💬 قاعات الدردشة</button>
+      <button class="top-btn" onclick="location.href='strategy.html'">📋 استراتيجية العمل</button>
+      <button class="top-btn" onclick="location.href='promotion-requests.html'">📈 طلبات الارتقاء</button>
+      <button class="top-btn" onclick="location.href='messages.html'">✉️ رسائل المشتركين</button>
+    </div>
+
     <a href="storage.html" class="storage-icon">💾 تخزين المنشورات والكويزات</a>
 
-    <!-- المنشورات -->
+    <!-- ✅ قسم برمجة المنشورات -->
     <section id="post-section">
       <h2>برمجة المنشورات</h2>
       <form id="postForm">
@@ -215,21 +219,19 @@ th, td {
           <input type="time" required>
           <small>التكرار كل 3 ساعات</small>
         </div>
+
         <div class="form-group">
-          <label>أيام النشر في الشهر</label>
-          <div class="checkbox-grid days" id="postDays"></div>
+          <button type="button" class="glass-btn" onclick="openModal('daysModal')">📅 أيام النشر في الشهر</button>
+          <button type="button" class="glass-btn" onclick="openModal('monthsModal')">🗓️ أشهر النشر</button>
         </div>
-        <div class="form-group">
-          <label>أشهر النشر</label>
-          <div class="checkbox-grid months" id="postMonths"></div>
-        </div>
+
         <button type="submit" class="btn-orange">حفظ المنشور</button>
       </form>
     </section>
 
     <hr>
 
-    <!-- Quiz -->
+    <!-- ✅ برمجة التدريب -->
     <section id="quiz-section">
       <h2>برمجة التدريب (Quiz)</h2>
       <form id="quizForm">
@@ -253,10 +255,10 @@ th, td {
         <div class="form-group">
           <label>الإجابة الصحيحة</label>
           <select required>
-            <option value="1">خيار 1</option>
-            <option value="2">خيار 2</option>
-            <option value="3">خيار 3</option>
-            <option value="4">خيار 4</option>
+            <option>خيار 1</option>
+            <option>خيار 2</option>
+            <option>خيار 3</option>
+            <option>خيار 4</option>
           </select>
         </div>
         <div class="form-group">
@@ -267,21 +269,19 @@ th, td {
             <option>قائد</option>
           </select>
         </div>
+
         <div class="form-group">
-          <label>أيام تكرار الكويز في الشهر</label>
-          <div class="checkbox-grid days" id="quizDays"></div>
+          <button type="button" class="glass-btn" onclick="openModal('quizDaysModal')">📅 أيام تكرار الكويز</button>
+          <button type="button" class="glass-btn" onclick="openModal('quizMonthsModal')">🗓️ أشهر تكرار الكويز</button>
         </div>
-        <div class="form-group">
-          <label>أشهر تكرار الكويز</label>
-          <div class="checkbox-grid months" id="quizMonths"></div>
-        </div>
+
         <button type="submit" class="btn-orange">حفظ التدريب</button>
       </form>
     </section>
 
     <hr>
 
-    <!-- إدارة المستخدمين -->
+    <!-- ✅ المستخدمين -->
     <section id="manage-users">
       <h2>المستخدمين</h2>
       <table>
@@ -300,80 +300,45 @@ th, td {
   </div>
 </div>
 
+<!-- ✅ النوافذ -->
+<div class="modal" id="daysModal"><div class="modal-content"><h3>أيام النشر</h3><div id="postDays" class="checkbox-grid days"></div></div></div>
+<div class="modal" id="monthsModal"><div class="modal-content"><h3>أشهر النشر</h3><div id="postMonths" class="checkbox-grid months"></div></div></div>
+<div class="modal" id="quizDaysModal"><div class="modal-content"><h3>أيام تكرار الكويز</h3><div id="quizDays" class="checkbox-grid days"></div></div></div>
+<div class="modal" id="quizMonthsModal"><div class="modal-content"><h3>أشهر تكرار الكويز</h3><div id="quizMonths" class="checkbox-grid months"></div></div></div>
+
 <script>
-  // تعبئة الأيام والأشهر
-  const postDays = document.getElementById('postDays');
-  const quizDays = document.getElementById('quizDays');
-  const postMonths = document.getElementById('postMonths');
-  const quizMonths = document.getElementById('quizMonths');
-  for(let i=1;i<=31;i++){
-    const l1=document.createElement('label'); l1.className='checkbox-item';
-    l1.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; postDays.appendChild(l1);
-    if(i<=28){ const l2=document.createElement('label'); l2.className='checkbox-item';
-      l2.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; quizDays.appendChild(l2);}
-  }
-  const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-  months.forEach((m,i)=>{
-    const l = document.createElement('label'); l.className='checkbox-item';
-    l.innerHTML = `<input type="checkbox" value="${i+1}"> ${m}`;
-    postMonths.appendChild(l);
-    quizMonths.appendChild(l.cloneNode(true));
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('active'); }));
+
+const postDays=document.getElementById('postDays'), quizDays=document.getElementById('quizDays'),
+      postMonths=document.getElementById('postMonths'), quizMonths=document.getElementById('quizMonths');
+for(let i=1;i<=31;i++){
+  let d=document.createElement('label'); d.className='checkbox-item'; d.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; postDays.appendChild(d);
+  if(i<=28){ let q=document.createElement('label'); q.className='checkbox-item'; q.innerHTML=`<input type="checkbox" value="${i}"> ${i}`; quizDays.appendChild(q); }
+}
+const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+months.forEach((m,i)=>{
+  let l=document.createElement('label'); l.className='checkbox-item'; l.innerHTML=`<input type="checkbox" value="${i+1}"> ${m}`;
+  postMonths.appendChild(l.cloneNode(true)); quizMonths.appendChild(l.cloneNode(true));
+});
+
+const users=[{name:"Ali",email:"ali@example.com",rank:"مسوق",room:"قاعة المسوقين"},
+{name:"Sara",email:"sara@example.com",rank:"سفير",room:"قاعة السفراء"},
+{name:"Khalid",email:"khalid@example.com",rank:"قائد",room:"قاعة القادة"}];
+const userTable=document.getElementById('userTable');
+function renderUsers(){
+  userTable.innerHTML='';
+  users.forEach((u,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${u.name}</td><td>${u.email}</td><td>${u.rank}</td><td>${u.room}</td>
+    <td><button onclick="deleteUser(${i})">حذف</button> <button onclick="promoteUser(${i})">ترقية</button> <button onclick="demoteUser(${i})">إعادة</button></td>`;
+    userTable.appendChild(tr);
   });
-
-  // معاينة المنشور والكويز
-  function previewMedia(fileInput, linkInput, previewBox){
-    previewBox.innerHTML=''; 
-    if(fileInput.files && fileInput.files[0]){
-      const file=fileInput.files[0];
-      if(file.type.startsWith('image/')){
-        const img=document.createElement('img');
-        img.src=URL.createObjectURL(file);
-        previewBox.appendChild(img);
-      } else if(file.type.startsWith('video/')){
-        const vid=document.createElement('video');
-        vid.src=URL.createObjectURL(file);
-        vid.controls=true;
-        previewBox.appendChild(vid);
-      }
-    } else if(linkInput.value){
-      const iframe=document.createElement('iframe');
-      iframe.src=linkInput.value;
-      iframe.width='100%';
-      iframe.height=150;
-      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen=true;
-      previewBox.appendChild(iframe);
-    }
-  }
-  document.getElementById('postMediaInput').addEventListener('change',()=>previewMedia(document.getElementById('postMediaInput'),document.getElementById('postLinkInput'),document.getElementById('postPreview')));
-  document.getElementById('postLinkInput').addEventListener('input',()=>previewMedia(document.getElementById('postMediaInput'),document.getElementById('postLinkInput'),document.getElementById('postPreview')));
-  document.getElementById('quizMediaInput').addEventListener('change',()=>previewMedia(document.getElementById('quizMediaInput'),document.getElementById('quizLinkInput'),document.getElementById('quizPreview')));
-  document.getElementById('quizLinkInput').addEventListener('input',()=>previewMedia(document.getElementById('quizMediaInput'),document.getElementById('quizLinkInput'),document.getElementById('quizPreview')));
-
-  // مثال إدارة المستخدمين
-  const users=[
-    {name:"Ali",email:"ali@example.com",rank:"مسوق",room:"قاعة المسوقين"},
-    {name:"Sara",email:"sara@example.com",rank:"سفير",room:"قاعة السفراء"},
-    {name:"Khalid",email:"khalid@example.com",rank:"قائد",room:"قاعة القادة"}
-  ];
-  const userTable=document.getElementById('userTable');
-  function renderUsers(){ 
-    userTable.innerHTML=''; 
-    users.forEach((u,i)=>{ 
-      const tr=document.createElement('tr'); 
-      tr.innerHTML=`<td>${u.name}</td><td>${u.email}</td><td>${u.rank}</td><td>${u.room}</td>
-      <td>
-        <button onclick="deleteUser(${i})">حذف</button>
-        <button onclick="promoteUser(${i})">ترقية</button>
-        <button onclick="demoteUser(${i})">إعادة رتبة سابقة</button>
-      </td>`;
-      userTable.appendChild(tr);
-    });
-  }
-  function deleteUser(i){ users.splice(i,1); renderUsers(); }
-  function promoteUser(i){ const order=['مسوق','سفير','قائد']; const idx=order.indexOf(users[i].rank); if(idx<order.length-1) users[i].rank=order[idx+1]; renderUsers();}
-  function demoteUser(i){ const order=['مسوق','سفير','قائد']; const idx=order.indexOf(users[i].rank); if(idx>0) users[i].rank=order[idx-1]; renderUsers();}
-  renderUsers();
+}
+function deleteUser(i){ users.splice(i,1); renderUsers(); }
+function promoteUser(i){ const order=['مسوق','سفير','قائد']; let idx=order.indexOf(users[i].rank); if(idx<2) users[i].rank=order[idx+1]; renderUsers(); }
+function demoteUser(i){ const order=['مسوق','سفير','قائد']; let idx=order.indexOf(users[i].rank); if(idx>0) users[i].rank=order[idx-1]; renderUsers(); }
+renderUsers();
 </script>
 
 </body>

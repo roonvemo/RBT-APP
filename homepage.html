@@ -6,71 +6,92 @@
   <title>الصفحة الرئيسية</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --primary: #16d1cc;
+      --orange: #ff9800;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.35);
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background-color: #f7faff;
+      background: linear-gradient(135deg, var(--primary), #0fa4a0);
       font-family: 'Tajawal', sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
-      position: relative;
+      align-items: center;
+      justify-content: center;
       min-height: 100vh;
+      color: var(--white);
     }
 
-    .form-container {
-      max-width: 400px;
-      width: 100%;
+    /* ✅ خلفية زجاجية */
+    .main-box {
+      width: 90%;
+      max-width: 420px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px var(--shadow);
       text-align: center;
-      margin-top: 60px;
+      padding: 30px 20px;
+      margin-top: 80px;
     }
 
     .logo {
       width: 100px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--white);
     }
 
-    .white-box {
-      background-color: white;
-      padding: 30px 20px;
-      border-radius: 20px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-    }
-
-    .white-box h1 {
+    h1 {
       font-size: 22px;
-      color: #ff9800;
       margin-bottom: 25px;
+      color: var(--white);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
-    .white-box a {
-      display: block;
-      width: 100%;
+    /* ✅ الأزرار */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .buttons a {
+      background: linear-gradient(45deg, var(--orange), #ffb84d);
+      color: var(--white);
+      text-decoration: none;
       padding: 14px;
-      margin-bottom: 15px;
-      background-color: #ff9800;
-      color: white;
-      border: none;
       border-radius: 30px;
       font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 6px 18px rgba(255, 152, 0, 0.4);
-      transition: background-color 0.3s ease-in-out;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
     }
 
-    .white-box a:hover {
-      background-color: #e08900;
+    .buttons a:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #ffb84d, var(--orange));
     }
 
-    /* ✅ أيقونة الإشعارات في الأعلى على اليسار */
-    .notification-icon {
-      position: absolute;
+    /* ✅ الأيقونات العليا */
+    .top-icons {
+      position: fixed;
       top: 15px;
-      left: 15px;
-      background-color: #ff9800;
-      color: white;
+      width: 90%;
+      max-width: 420px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .top-icons a {
+      background-color: var(--orange);
+      color: var(--white);
       font-size: 22px;
       text-decoration: none;
       border-radius: 50%;
@@ -83,48 +104,30 @@
       transition: background-color 0.3s ease-in-out;
     }
 
-    .notification-icon:hover {
+    .top-icons a:hover {
       background-color: #e08900;
     }
 
-    /* ✅ أيقونة الحساب في الأعلى على اليمين */
-    .profile-icon {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background-color: #ff9800;
-      color: white;
-      font-size: 22px;
-      text-decoration: none;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
-      transition: background-color 0.3s ease-in-out;
-    }
-
-    .profile-icon:hover {
-      background-color: #e08900;
+    /* ✅ متجاوبة للهاتف */
+    @media (max-width: 400px) {
+      h1 { font-size: 20px; }
+      .buttons a { font-size: 14px; padding: 12px; }
+      .main-box { padding: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔔 أيقونة الإشعارات على اليسار -->
-  <a href="notifications.html" class="notification-icon">🔔</a>
+  <div class="top-icons">
+    <a href="notifications.html">🔔</a>
+    <a href="profile.html">⚙️</a>
+  </div>
 
-  <!-- ⚙️ أيقونة الحساب على اليمين -->
-  <a href="profile.html" class="profile-icon">⚙️</a>
-
-  <div class="form-container">
+  <div class="main-box">
     <img src="assets/image/logo2.png.png" alt="شعار" class="logo" />
+    <h1>الصفحة الرئيسية</h1>
 
-    <div class="white-box">
-      <h1>الصفحة الرئيسية</h1>
-
+    <div class="buttons">
       <a href="chatrooms.html">💬 قاعات النقاش</a>
       <a href="tasks.html">📋 المهام</a>
       <a href="strategy.html">🧠 استراتيجية الفريق</a>

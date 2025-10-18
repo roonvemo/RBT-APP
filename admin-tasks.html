@@ -1,255 +1,489 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مهام الأدمن</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة تحكم الأدمن — RBT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(135deg, #f7f7f7, #eaeaea);
-      color: #333;
-      padding: 0;
+    :root{
+      --teal:#17bdb6;
+      --accent:#ff9800;
+      --bg:#f3f6f8;
+      --card:#ffffff;
+      --muted:#7b8a91;
+      --glass-bg: rgba(255,255,255,0.72);
     }
-
-    header {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Tajawal',sans-serif;background:linear-gradient(180deg,#eef6f6,#f7fbfb);color:#123;}
+    /* Header top with turquoise like app */
+    .topbar{
+      background:var(--teal);
+      color:#fff;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      position:sticky;
+      top:0;
+      z-index:50;
     }
-
-    header button {
-      border: none;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(10px);
-      padding: 10px 15px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #000;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+    .topbar .title{font-weight:700;font-size:18px}
+    .topbar .top-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{
+      background:rgba(255,255,255,0.14);
+      border:none;
+      color:#fff;
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:18px;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
     }
-
-    header button:hover {
-      transform: scale(1.05);
-      background: rgba(255, 255, 255, 0.7);
+    /* page container */
+    .wrap{max-width:920px;margin:18px auto;padding:0 14px 80px;}
+    /* top quick buttons (inside page) */
+    .quick-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+    .quick-btn{
+      background:var(--glass-bg);
+      border-radius:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.04);
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);cursor:pointer;font-weight:700;color:#0b2f2d;
+      display:flex;align-items:center;gap:8px;
     }
-
-    .container {
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
+    /* main card style */
+    .card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:18px;box-shadow:0 10px 30px rgba(13,38,41,0.06);}
+    .card h2{margin:0 0 10px 0;color:var(--teal);font-size:18px}
+    label{display:block;font-weight:600;margin-bottom:6px;color:#234}
+    input[type="text"], input[type="url"], textarea, select, input[type="time"]{
+      width:100%;padding:10px;border-radius:10px;border:1px solid #e0e6e6;font-size:14px;margin-bottom:10px;
     }
-
-    h2 {
-      font-size: 18px;
-      margin-top: 30px;
-      color: #000;
-      border-right: 4px solid #999;
-      padding-right: 8px;
+    textarea{min-height:72px;resize:vertical}
+    .small-muted{color:var(--muted);font-size:13px}
+    .row{display:flex;gap:10px;align-items:center}
+    .row .flex{flex:1}
+    .btn-primary{background:var(--accent);color:#fff;border:none;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(255,152,0,0.18)}
+    .btn-neutral{background:var(--glass-bg);border:none;padding:10px;border-radius:12px;cursor:pointer}
+    .form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    /* preview box */
+    .preview-box{margin-top:8px}
+    .preview-box img, .preview-box video, .preview-box iframe{max-width:100%;border-radius:8px;display:block}
+    /* users table */
+    table{width:100%;border-collapse:collapse;margin-top:6px}
+    th,td{padding:10px;border-bottom:1px solid #eef2f2;text-align:center;font-size:14px}
+    th{background:transparent;color:var(--muted);font-weight:700}
+    .user-btn{padding:6px 8px;border-radius:8px;border:none;cursor:pointer;margin:2px}
+    .user-btn.delete{background:#ffecec;color:#a00}
+    .user-btn.promote{background:#e6fff9;color:#046852}
+    .user-btn.demote{background:#fff4e6;color:#924600}
+    /* glass modal */
+    .modal{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);
+      z-index:2000;opacity:0;pointer-events:none;transition:opacity .22s ease;
     }
-
-    .section {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 15px;
-      margin-top: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    .modal.active{opacity:1;pointer-events:auto}
+    .modal-card{
+      width:92%;max-width:420px;background:rgba(255,255,255,0.78);backdrop-filter:blur(10px);
+      border-radius:14px;padding:14px;box-shadow:0 24px 60px rgba(10,20,20,0.15);transform:translateY(8px) scale(.96);
+      animation:popIn .28s cubic-bezier(.2,.9,.2,1) forwards;
+      max-height:80vh;overflow:auto;
     }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-      box-sizing: border-box;
-    }
-
-    .btn {
-      background: rgba(255,255,255,0.8);
-      border: none;
-      border-radius: 15px;
-      padding: 10px 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: all 0.3s;
-      font-weight: bold;
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,1);
-      transform: translateY(-2px);
-    }
-
-    /* Popup modal الزجاجي */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(10px);
-      background: rgba(0,0,0,0.4);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: rgba(255,255,255,0.8);
-      border-radius: 20px;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    .close {
-      background: none;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      color: #333;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      header button {
-        font-size: 13px;
-        padding: 8px 10px;
-      }
-      h2 { font-size: 16px; }
+    @keyframes popIn{to{transform:translateY(0) scale(1)}}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .modal .close{background:transparent;border:none;font-size:22px;cursor:pointer;color:#234}
+    .checkbox-grid{display:grid;gap:8px;margin-top:8px}
+    .checkbox-grid.days{grid-template-columns:repeat(4,1fr)}
+    .checkbox-grid.months{grid-template-columns:repeat(3,1fr)}
+    .checkbox-grid label{background:#fff;border-radius:10px;padding:8px 6px;display:flex;align-items:center;gap:8px;border:1px solid #f0f4f4}
+    .save-small{background:var(--teal);color:#fff;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;margin-top:10px;font-weight:700}
+    /* footer saved summary */
+    .summary{background:linear-gradient(90deg,rgba(23,189,182,0.08),rgba(255,152,0,0.04));padding:10px;border-radius:12px;font-size:14px;color:#123;margin-top:8px}
+    /* responsive */
+    @media (max-width:600px){
+      .checkbox-grid.days{grid-template-columns:repeat(4,1fr)}
+      .checkbox-grid.months{grid-template-columns:repeat(3,1fr)}
+      .modal-card{max-width:94%}
+      .quick-row{gap:8px}
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <button>قاعات الدردشة</button>
-  <button>استراتيجية العمل</button>
-  <button>طلبات الارتقاء</button>
-  <button>رسائل المشتركين</button>
-</header>
-
-<div class="container">
-
-  <h2>برمجة المنشورات</h2>
-  <div class="section">
-    <label>صورة/فيديو/رابط أعلى المنشور</label>
-    <input type="file" />
-    <label>رابط يوتيوب أو موقع (اختياري)</label>
-    <input type="url" placeholder="https://..." />
-    <label>نص المنشور</label>
-    <textarea rows="3"></textarea>
-    <label>اختيار القاعة</label>
-    <select>
-      <option>قاعة المسوقين</option>
-      <option>قاعة السفراء</option>
-      <option>قاعة القادة</option>
-    </select>
-    <button class="btn" onclick="openModal('days')">📅 أيام النشر في الشهر</button>
-    <button class="btn" onclick="openModal('months')">🗓️ أشهر النشر</button>
-    <button class="btn">💾 حفظ المنشور</button>
+  <!-- TOP BAR (turquoise) -->
+  <div class="topbar">
+    <div class="title">لوحة تحكم الأدمن — RBT</div>
+    <div class="top-actions">
+      <button class="icon-btn" title="الإشعارات" onclick="location.href='notifications.html'">🔔</button>
+      <button class="icon-btn" title="حسابي" onclick="location.href='profile.html'">⚙️</button>
+    </div>
   </div>
 
-  <h2>برمجة التدريب (Quiz)</h2>
-  <div class="section">
-    <label>صورة/فيديو/رابط أعلى الكويز</label>
-    <input type="file" />
-    <label>السؤال</label>
-    <input type="text" />
-    <label>خيارات الإجابة</label>
-    <input placeholder="خيار 1">
-    <input placeholder="خيار 2">
-    <input placeholder="خيار 3">
-    <input placeholder="خيار 4">
-    <label>الإجابة الصحيحة</label>
-    <select>
-      <option>خيار 1</option><option>خيار 2</option><option>خيار 3</option><option>خيار 4</option>
-    </select>
-    <button class="btn" onclick="openModal('quizDays')">📆 أيام تكرار الكويز</button>
-    <button class="btn" onclick="openModal('quizMonths')">🗓️ أشهر تكرار الكويز</button>
-    <button class="btn">💾 حفظ التدريب</button>
-  </div>
-</div>
+  <div class="wrap">
 
-<!-- 🪟 النوافذ المنبثقة -->
-<div id="days" class="modal">
-  <div class="modal-content">
-    <button class="close" onclick="closeModal('days')">&times;</button>
-    <h3>أيام النشر في الشهر</h3>
-    <div id="days-list"></div>
-  </div>
-</div>
+    <!-- Quick buttons (inside page) -->
+    <div class="quick-row">
+      <button class="quick-btn" onclick="location.href='chatrooms.html'">💬 قاعات الدردشة</button>
+      <button class="quick-btn" onclick="location.href='strategy.html'">📋 استراتيجية العمل</button>
+      <button class="quick-btn" onclick="location.href='promotion-requests.html'">📈 طلبات الارتقاء</button>
+      <button class="quick-btn" onclick="location.href='messages.html'">✉️ رسائل المشتركين</button>
+    </div>
 
-<div id="months" class="modal">
-  <div class="modal-content">
-    <button class="close" onclick="closeModal('months')">&times;</button>
-    <h3>أشهر النشر</h3>
-    <div id="months-list"></div>
-  </div>
-</div>
+    <!-- storage link -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+      <a href="storage.html" style="text-decoration:none;color:var(--muted);font-weight:700">💾 تخزين المنشورات والكويزات</a>
+    </div>
 
-<div id="quizDays" class="modal">
-  <div class="modal-content">
-    <button class="close" onclick="closeModal('quizDays')">&times;</button>
-    <h3>أيام تكرار الكويز</h3>
-    <div id="quizDays-list"></div>
-  </div>
-</div>
+    <!-- Post programming -->
+    <div class="card" id="post-section">
+      <h2>برمجة المنشورات</h2>
 
-<div id="quizMonths" class="modal">
-  <div class="modal-content">
-    <button class="close" onclick="closeModal('quizMonths')">&times;</button>
-    <h3>أشهر تكرار الكويز</h3>
-    <div id="quizMonths-list"></div>
+      <form id="postForm" onsubmit="handleSavePost(event)">
+        <label>صورة/فيديو/رابط أعلى المنشور</label>
+        <input type="file" id="postMediaInput" accept="image/*,video/*">
+        <input type="url" id="postLinkInput" placeholder="رابط يوتيوب أو موقع (اختياري)">
+
+        <div class="preview-box" id="postPreview"></div>
+
+        <label>نص المنشور</label>
+        <textarea id="postText" placeholder="نص المنشور..." required></textarea>
+
+        <label>اختيار القاعة</label>
+        <select id="postRoom">
+          <option value="marketers">قاعة المسوقين</option>
+          <option value="ambassadors">قاعة السفراء</option>
+          <option value="leaders">قاعة القادة</option>
+        </select>
+
+        <div class="row">
+          <div class="flex">
+            <label>وقت أول نشر</label>
+            <input type="time" id="postFirstTime" required>
+            <div class="small-muted">التكرار كل 3 ساعات (سيتم اعتماد فاصل 3 ساعات تلقائياً)</div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:8px;">
+          <button type="button" class="glass-btn" onclick="openModal('postDaysModal')">📅 أيام النشر في الشهر</button>
+          <button type="button" class="glass-btn" onclick="openModal('postMonthsModal')">🗓️ أشهر النشر</button>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">حفظ المنشور</button>
+          <button type="button" class="btn-neutral" onclick="resetPostForm()">إعادة تعيين</button>
+        </div>
+
+        <div id="postSavedMsg" class="summary" style="display:none;margin-top:12px"></div>
+      </form>
+    </div>
+
+    <!-- Quiz programming -->
+    <div class="card" id="quiz-section">
+      <h2>برمجة التدريب (Quiz)</h2>
+
+      <form id="quizForm" onsubmit="handleSaveQuiz(event)">
+        <label>صورة/فيديو/رابط أعلى الكويز</label>
+        <input type="file" id="quizMediaInput" accept="image/*,video/*">
+        <input type="url" id="quizLinkInput" placeholder="رابط يوتيوب أو موقع (اختياري)">
+        <div class="preview-box" id="quizPreview"></div>
+
+        <label>السؤال</label>
+        <textarea id="quizQuestion" placeholder="اكتب السؤال..." required></textarea>
+
+        <label>خيارات الإجابة</label>
+        <input type="text" id="opt1" placeholder="خيار 1" required>
+        <input type="text" id="opt2" placeholder="خيار 2" required>
+        <input type="text" id="opt3" placeholder="خيار 3">
+        <input type="text" id="opt4" placeholder="خيار 4">
+
+        <label>الإجابة الصحيحة</label>
+        <select id="correctOpt" required>
+          <option value="1">خيار 1</option>
+          <option value="2">خيار 2</option>
+          <option value="3">خيار 3</option>
+          <option value="4">خيار 4</option>
+        </select>
+
+        <label>رتبة المستفيد</label>
+        <select id="quizRank">
+          <option value="marketer">مسوق</option>
+          <option value="ambassador">سفير</option>
+          <option value="leader">قائد</option>
+        </select>
+
+        <div class="row" style="margin-top:8px;">
+          <button type="button" class="glass-btn" onclick="openModal('quizDaysModal')">📅 أيام تكرار الكويز</button>
+          <button type="button" class="glass-btn" onclick="openModal('quizMonthsModal')">🗓️ أشهر تكرار الكويز</button>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">حفظ التدريب</button>
+          <button type="button" class="btn-neutral" onclick="resetQuizForm()">إعادة تعيين</button>
+        </div>
+
+        <div id="quizSavedMsg" class="summary" style="display:none;margin-top:12px"></div>
+      </form>
+    </div>
+
+    <!-- Users -->
+    <div class="card" id="manage-users">
+      <h2>المستخدمين</h2>
+      <table aria-label="users table">
+        <thead>
+          <tr><th>اسم المستخدم</th><th>البريد الإلكتروني</th><th>الرتبة الحالية</th><th>قاعة الدردشة</th><th>التحكم</th></tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+      </table>
+    </div>
+
+  </div> <!-- wrap -->
+
+  <!-- MODALS (post days/months & quiz days/months) -->
+  <div class="modal" id="postDaysModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong>📅 أيام النشر في الشهر</strong>
+        <button class="close" onclick="closeModal('postDaysModal')">×</button>
+      </div>
+      <div class="checkbox-grid days" id="postDaysGrid"></div>
+      <button class="save-small" onclick="saveModalSelection('postDays')">حفظ</button>
+    </div>
   </div>
-</div>
+
+  <div class="modal" id="postMonthsModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong>🗓️ أشهر النشر</strong>
+        <button class="close" onclick="closeModal('postMonthsModal')">×</button>
+      </div>
+      <div class="checkbox-grid months" id="postMonthsGrid"></div>
+      <button class="save-small" onclick="saveModalSelection('postMonths')">حفظ</button>
+    </div>
+  </div>
+
+  <div class="modal" id="quizDaysModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong>📅 أيام تكرار الكويز</strong>
+        <button class="close" onclick="closeModal('quizDaysModal')">×</button>
+      </div>
+      <div class="checkbox-grid days" id="quizDaysGrid"></div>
+      <button class="save-small" onclick="saveModalSelection('quizDays')">حفظ</button>
+    </div>
+  </div>
+
+  <div class="modal" id="quizMonthsModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong>🗓️ أشهر تكرار الكويز</strong>
+        <button class="close" onclick="closeModal('quizMonthsModal')">×</button>
+      </div>
+      <div class="checkbox-grid months" id="quizMonthsGrid"></div>
+      <button class="save-small" onclick="saveModalSelection('quizMonths')">حفظ</button>
+    </div>
+  </div>
 
 <script>
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+/* -------------------------
+   Utilities & modal logic
+   ------------------------- */
+function openModal(id){
+  document.getElementById(id).classList.add('active');
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('active');
+}
+document.querySelectorAll('.modal').forEach(m=>{
+  m.addEventListener('click', e=>{
+    if(e.target === m) m.classList.remove('active');
+  });
+});
 
-  const days = Array.from({length:31}, (_,i)=>i+1)
-  const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]
+/* -------------------------
+   Fill days/months grids
+   ------------------------- */
+const daysArr = Array.from({length:31},(_,i)=>i+1);
+const monthsArr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
-  function renderList(containerId, items){
-    document.getElementById(containerId).innerHTML = items.map(i=>`
-      <label><input type="checkbox"> ${i}</label>
-    `).join("<br>");
+function renderGrid(containerId, items, type){
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  items.forEach((it, idx)=>{
+    const label = document.createElement('label');
+    const val = (type==='month') ? (idx+1) : it;
+    label.innerHTML = `<input type="checkbox" value="${val}"> ${it}`;
+    el.appendChild(label);
+  });
+}
+
+renderGrid('postDaysGrid', daysArr, 'day');
+renderGrid('quizDaysGrid', daysArr.slice(0,28), 'day'); // quiz days up to 28
+renderGrid('postMonthsGrid', monthsArr, 'month');
+renderGrid('quizMonthsGrid', monthsArr, 'month');
+
+/* -------------------------
+   Persist selections in localStorage
+   ------------------------- */
+function saveModalSelection(key){
+  // key: 'postDays' or 'postMonths' or 'quizDays' or 'quizMonths'
+  let gridId;
+  if(key==='postDays') gridId='postDaysGrid';
+  else if(key==='postMonths') gridId='postMonthsGrid';
+  else if(key==='quizDays') gridId='quizDaysGrid';
+  else if(key==='quizMonths') gridId='quizMonthsGrid';
+  const checks = Array.from(document.getElementById(gridId).querySelectorAll('input[type=checkbox]'));
+  const selected = checks.filter(c=>c.checked).map(c=>c.value);
+  localStorage.setItem('rbt_'+key, JSON.stringify(selected));
+  // feedback + close modal
+  alert('تم حفظ الاختيارات.');
+  // close the modal
+  if(key==='postDays') closeModal('postDaysModal');
+  if(key==='postMonths') closeModal('postMonthsModal');
+  if(key==='quizDays') closeModal('quizDaysModal');
+  if(key==='quizMonths') closeModal('quizMonthsModal');
+  renderSavedSummary();
+}
+
+/* restore */
+function restoreSelections(){
+  ['postDays','postMonths','quizDays','quizMonths'].forEach(k=>{
+    const data = JSON.parse(localStorage.getItem('rbt_'+k) || '[]');
+    let gridId = k==='postMonths' ? 'postMonthsGrid' : k==='quizMonths' ? 'quizMonthsGrid' : k==='postDays' ? 'postDaysGrid' : 'quizDaysGrid';
+    const checkInputs = Array.from(document.getElementById(gridId).querySelectorAll('input[type=checkbox]'));
+    checkInputs.forEach(inp=>{
+      inp.checked = data.includes(String(inp.value));
+    });
+  });
+}
+restoreSelections();
+
+/* show small summary under forms */
+function renderSavedSummary(){
+  const pDays = JSON.parse(localStorage.getItem('rbt_postDays')||'[]');
+  const pMonths = JSON.parse(localStorage.getItem('rbt_postMonths')||'[]');
+  const qDays = JSON.parse(localStorage.getItem('rbt_quizDays')||'[]');
+  const qMonths = JSON.parse(localStorage.getItem('rbt_quizMonths')||'[]');
+
+  const postMsg = document.getElementById('postSavedMsg');
+  postMsg.style.display = (pDays.length||pMonths.length)?'block':'none';
+  postMsg.innerText = `أيام: ${pDays.join(', ') || '—'}  •  أشهر: ${pMonths.map(m=>monthsArr[m-1]).join(', ') || '—'}`;
+
+  const quizMsg = document.getElementById('quizSavedMsg');
+  quizMsg.style.display = (qDays.length||qMonths.length)?'block':'none';
+  quizMsg.innerText = `أيام: ${qDays.join(', ') || '—'}  •  أشهر: ${qMonths.map(m=>monthsArr[m-1]).join(', ') || '—'}`;
+}
+renderSavedSummary();
+
+/* -------------------------
+   Media preview for Post & Quiz
+   ------------------------- */
+function previewMedia(fileInput, linkInput, previewBox){
+  previewBox.innerHTML='';
+  if(fileInput && fileInput.files && fileInput.files[0]){
+    const file = fileInput.files[0];
+    if(file.type.startsWith('image/')){
+      const img = document.createElement('img'); img.src=URL.createObjectURL(file); previewBox.appendChild(img);
+    } else if(file.type.startsWith('video/')){
+      const v = document.createElement('video'); v.src=URL.createObjectURL(file); v.controls=true; previewBox.appendChild(v);
+    }
+  } else if(linkInput && linkInput.value){
+    // show iframe if youtube or url
+    const iframe = document.createElement('iframe');
+    iframe.src = linkInput.value;
+    iframe.width = '100%'; iframe.height = 180; iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    previewBox.appendChild(iframe);
   }
+}
+const postMediaInput = document.getElementById('postMediaInput'), postLinkInput = document.getElementById('postLinkInput'), postPreview = document.getElementById('postPreview');
+postMediaInput.addEventListener('change', ()=>previewMedia(postMediaInput, postLinkInput, postPreview));
+postLinkInput.addEventListener('input', ()=>previewMedia(postMediaInput, postLinkInput, postPreview));
 
-  renderList('days-list', days)
-  renderList('months-list', months)
-  renderList('quizDays-list', days)
-  renderList('quizMonths-list', months)
+const quizMediaInput = document.getElementById('quizMediaInput'), quizLinkInput = document.getElementById('quizLinkInput'), quizPreview = document.getElementById('quizPreview');
+quizMediaInput.addEventListener('change', ()=>previewMedia(quizMediaInput, quizLinkInput, quizPreview));
+quizLinkInput.addEventListener('input', ()=>previewMedia(quizMediaInput, quizLinkInput, quizPreview));
+
+/* -------------------------
+   Save post & quiz (local only for demo)
+   ------------------------- */
+function handleSavePost(e){
+  e.preventDefault();
+  const post = {
+    text: document.getElementById('postText').value,
+    room: document.getElementById('postRoom').value,
+    firstTime: document.getElementById('postFirstTime').value,
+    days: JSON.parse(localStorage.getItem('rbt_postDays')||'[]'),
+    months: JSON.parse(localStorage.getItem('rbt_postMonths')||'[]'),
+    savedAt: new Date().toISOString()
+  };
+  // for demo we store posts in localStorage array
+  const all = JSON.parse(localStorage.getItem('rbt_posts')||'[]'); all.push(post); localStorage.setItem('rbt_posts', JSON.stringify(all));
+  document.getElementById('postSavedMsg').style.display='block';
+  document.getElementById('postSavedMsg').innerText = 'تم حفظ المنشور محليًا. (للمعاينة على الخادم تحتاج backend)';
+}
+
+function handleSaveQuiz(e){
+  e.preventDefault();
+  const quiz = {
+    question: document.getElementById('quizQuestion').value,
+    opts: [document.getElementById('opt1').value, document.getElementById('opt2').value, document.getElementById('opt3').value, document.getElementById('opt4').value],
+    correct: document.getElementById('correctOpt').value,
+    rank: document.getElementById('quizRank').value,
+    days: JSON.parse(localStorage.getItem('rbt_quizDays')||'[]'),
+    months: JSON.parse(localStorage.getItem('rbt_quizMonths')||'[]'),
+    savedAt: new Date().toISOString()
+  };
+  const all = JSON.parse(localStorage.getItem('rbt_quizzes')||'[]'); all.push(quiz); localStorage.setItem('rbt_quizzes', JSON.stringify(all));
+  document.getElementById('quizSavedMsg').style.display='block';
+  document.getElementById('quizSavedMsg').innerText = 'تم حفظ التدريب محليًا.';
+}
+
+/* reset helpers */
+function resetPostForm(){
+  document.getElementById('postForm').reset(); postPreview.innerHTML=''; localStorage.removeItem('rbt_posts_preview');
+}
+function resetQuizForm(){
+  document.getElementById('quizForm').reset(); quizPreview.innerHTML=''; localStorage.removeItem('rbt_quizzes_preview');
+}
+
+/* -------------------------
+   Users demo & actions
+   ------------------------- */
+const users = [
+  {name:"Ali", email:"ali@example.com", rank:"مسوق", room:"قاعة المسوقين"},
+  {name:"Sara", email:"sara@example.com", rank:"سفير", room:"قاعة السفراء"},
+  {name:"Khalid", email:"khalid@example.com", rank:"قائد", room:"قاعة القادة"}
+];
+function renderUsers(){
+  const tbody = document.getElementById('userTable'); tbody.innerHTML='';
+  users.forEach((u,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${u.name}</td><td>${u.email}</td><td>${u.rank}</td><td>${u.room}</td>
+      <td>
+        <button class="user-btn delete" onclick="deleteUser(${i})">حذف</button>
+        <button class="user-btn promote" onclick="promoteUser(${i})">ترقية</button>
+        <button class="user-btn demote" onclick="demoteUser(${i})">إعادة رتبة</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+function deleteUser(i){ if(confirm('تأكيد حذف المستخدم؟')){ users.splice(i,1); renderUsers(); } }
+function promoteUser(i){
+  const order = ['مسوق','سفير','قائد'];
+  const idx = order.indexOf(users[i].rank);
+  if(idx < order.length-1){ users[i].rank = order[idx+1]; renderUsers(); } else alert('المستخدم في أعلى رتبة.');
+}
+function demoteUser(i){
+  const order = ['مسوق','سفير','قائد'];
+  const idx = order.indexOf(users[i].rank);
+  if(idx > 0){ users[i].rank = order[idx-1]; renderUsers(); } else alert('المستخدم في أدنى رتبة.');
+}
+renderUsers();
+
+/* -------------------------
+   initialize summary and restore
+   ------------------------- */
+renderSavedSummary();
+restoreSelections();
+
 </script>
-
 </body>
 </html>

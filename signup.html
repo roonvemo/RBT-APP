@@ -3,9 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>إنشاء حساب</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>إنشاء حساب - Royal Bee Team</title>
+
+  <!-- خط جميل -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet"/>
+
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(160deg, #e0f7fa, #f7faff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      padding: 30px 25px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    .auth-form input,
+    .auth-form select {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0;
+      border: 1px solid #dfe6eb;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      background-color: #f9fcff;
+      transition: border-color 0.3s ease;
+    }
+
+    .auth-form input:focus,
+    .auth-form select:focus {
+      border-color: #16d1cc;
+      box-shadow: 0 0 6px rgba(22, 209, 204, 0.3);
+    }
+
+    .btn-orange {
+      background: linear-gradient(145deg, #ffb74d, #ff9800);
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-orange:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 152, 0, 0.5);
+    }
+
     .facebook-btn {
       background-color: #1877f2;
       color: white;
@@ -18,18 +86,43 @@
       margin-top: 10px;
       box-shadow: 0 4px 10px rgba(24, 119, 242, 0.4);
       cursor: pointer;
+      transition: 0.3s ease;
     }
+
     .facebook-btn:hover {
       background-color: #145dbf;
     }
+
+    .extras {
+      margin-top: 18px;
+    }
+
+    .extras a {
+      color: #16d1cc;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .extras a:hover {
+      color: #ff9800;
+    }
+
+    @media (max-height: 600px) {
+      body {
+        height: auto;
+        padding: 40px 0;
+      }
+    }
   </style>
 </head>
-<body class="auth-body">
+
+<body>
 
   <div class="form-container">
     <img src="assets/image/logo.png" alt="Royal Bee Team" class="logo" />
 
-    <form class="auth-form white-box">
+    <form class="auth-form">
       <input type="text" id="id-number" placeholder="الرقم التعريفي" required />
       <input type="text" id="fullname" placeholder="الاسم الكامل" required />
       <input type="password" id="password" placeholder="كلمة المرور" required />
@@ -45,11 +138,10 @@
         <option value="مصر">مصر</option>
         <option value="بلد آخر">بلد آخر</option>
       </select>
-      
+
       <button class="btn-orange" type="submit">تسجيل</button>
     </form>
 
-    <!-- زر التسجيل عبر فيسبوك -->
     <button class="facebook-btn" onclick="registerWithFacebook()">📘 التسجيل عبر فيسبوك</button>
 
     <div class="extras">
@@ -61,11 +153,11 @@
     document.querySelector("form").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const idNumber = document.getElementById("id-number").value;
-      const fullName = document.getElementById("fullname").value;
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
-      const upline = document.getElementById("upline").value;
+      const idNumber = document.getElementById("id-number").value.trim();
+      const fullName = document.getElementById("fullname").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document.getElementById("confirm-password").value.trim();
+      const upline = document.getElementById("upline").value.trim();
       const country = document.getElementById("country").value;
 
       if (!idNumber || !fullName || !password || !confirmPassword || !upline || !country) {
@@ -78,19 +170,18 @@
         return;
       }
 
-      // حفظ بيانات المستخدم في localStorage (مبدئياً)
+      // حفظ بيانات المستخدم مؤقتًا في localStorage
       localStorage.setItem("user_id", idNumber);
       localStorage.setItem("user_fullname", fullName);
       localStorage.setItem("user_upline", upline);
       localStorage.setItem("user_country", country);
-      localStorage.setItem("user_rank", "مسوق"); // رتبة افتراضية
+      localStorage.setItem("user_rank", "مسوق");
 
-      // التوجيه إلى الصفحة الرئيسية
       window.location.href = "homepage.html";
     });
 
     function registerWithFacebook() {
-      alert("سيتم ربط التسجيل بحساب فيسبوك لاحقًا (ميزة قيد التطوير).");
+      alert("سيتم تفعيل التسجيل عبر فيسبوك قريبًا 🚀");
     }
   </script>
 
